@@ -1,33 +1,34 @@
 package com.fitechsource;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.TestInstance;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.LongSummaryStatistics;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class FitechsourceTest {
-    private static final int repeat = 1;
-    private List<Long> list = new ArrayList<>();
+    private static final int repeat = 10;
+    private ArrayList<Long> list = new ArrayList<>();
 
     @RepeatedTest(repeat)
     @Order(1)
     void timeout() throws TestException {
         long sourceTestTimeout = getTimeout(new TestImpl());
-        long customTestTimeout = getTimeout(new CustomTestImpl());
-        long diff = customTestTimeout - sourceTestTimeout;
+        long customTestTimeout = getTimeout(new CustomStreamTestImpl());
+        long diff = sourceTestTimeout - customTestTimeout;
         list.add(diff);
         assertTrue(diff > 0);
     }
 
-    @org.junit.jupiter.api.Test
-    @Order(2)
+    @AfterAll
     void getDiffAverage() {
         LongSummaryStatistics statistics = list.stream().mapToLong(x -> x).summaryStatistics();
-        System.out.println(statistics);
+        System.out.println("Average gain: " + statistics.getAverage()+"ms");
     }
 
     private long getTimeout(Test test) throws TestException {
