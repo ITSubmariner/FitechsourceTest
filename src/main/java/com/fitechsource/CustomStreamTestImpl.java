@@ -6,6 +6,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.function.IntConsumer;
 import java.util.stream.IntStream;
 
+/*Minor colution by Stream API. Doesn't satisfy the conditions.*/
 public class CustomStreamTestImpl implements Test {
     private CopyOnWriteArraySet<Double> result = new CopyOnWriteArraySet<>();
 
@@ -21,12 +22,5 @@ public class CustomStreamTestImpl implements Test {
         IntStream.range(0, TestConsts.N)
                 .parallel()
                 .forEach(consumer);
-    }
-
-    private class CustomThread implements Runnable {
-        @Override
-        public void run() {
-
-        }
     }
 }

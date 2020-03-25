@@ -1,7 +1,6 @@
 package com.fitechsource;
 
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.TestInstance;
 
@@ -12,14 +11,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class FitechsourceTest {
-    private static final int repeat = 10;
+    private static final int repeat = 100;
     private ArrayList<Long> list = new ArrayList<>();
 
     @RepeatedTest(repeat)
-    @Order(1)
     void timeout() throws TestException {
         long sourceTestTimeout = getTimeout(new TestImpl());
-        long customTestTimeout = getTimeout(new CustomStreamTestImpl());
+        long customTestTimeout = getTimeout(new CustomThreadTestImpl());
         long diff = sourceTestTimeout - customTestTimeout;
         list.add(diff);
         assertTrue(diff > 0);

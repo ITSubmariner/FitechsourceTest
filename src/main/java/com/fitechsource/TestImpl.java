@@ -22,6 +22,6 @@ public class TestImpl implements Test {
             res.addAll(TestCalc.calculate(i));
         }
 
-//        System.out.println(res);
+        System.out.println(res);
     }
 }
